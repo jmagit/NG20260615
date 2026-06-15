@@ -1,4 +1,4 @@
-# Laboratorio Angular 21 - Creación y estructuración de una aplicación
+# Laboratorio Angular 22 - Creación y estructuración de una aplicación
 
 ## Objetivo del laboratorio
 
