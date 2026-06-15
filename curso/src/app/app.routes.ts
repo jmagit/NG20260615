@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { Demos } from './ejemplos/demos/demos';
 import { Home, PageNotFound } from './layout';
+import { Demos } from './ejemplos';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', component: Home },
