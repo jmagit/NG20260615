@@ -1,13 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
-import { LoggerService } from 'src/lib/my-library/services/logger-service';
+import { ERROR_LEVEL, LoggerService } from 'src/lib/my-library/services/logger-service';
+import { environment } from 'src/environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes, withComponentInputBinding()),
-    LoggerService,
+    // LoggerService,
+    // { provide: ERROR_LEVEL, useValue: environment.ERROR_LEVEL }
   ]
 };
