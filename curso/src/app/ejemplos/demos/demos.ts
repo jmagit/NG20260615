@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { JsonPipe } from '@angular/common';
 import { Component, computed, effect, resource, signal } from '@angular/core';
+import { LoggerService } from 'src/lib/my-library/services/logger-service';
 
 @Component({
   selector: 'app-demos',
@@ -9,6 +11,12 @@ import { Component, computed, effect, resource, signal } from '@angular/core';
 })
 export class Demos {
 
+  constructor(private logger: LoggerService) {
+    logger.error('es un error')
+    logger.warn('es un warn')
+    logger.info('es un info')
+    logger.log('es un log')
+  }
 
   // ejemplo de señales
   // readonly conSignal = signal(0)
