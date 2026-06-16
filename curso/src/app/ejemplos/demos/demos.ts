@@ -11,20 +11,20 @@ import { Notification } from "src/app/layout";
   imports: [JsonPipe, Notification],
   templateUrl: './demos.html',
   styleUrl: './demos.css',
-  // providers: [ NotificationService ]
+  providers: [ NotificationService ]
 })
 export class Demos {
   private readonly logger= inject(LoggerService)
 
   // Ejemplo de servicios
-  constructor(public vm: NotificationService) {
-    // effect(() => {
-    //   if (this.vm.HayNotificaciones() && this.vm.Listado()[this.vm.Listado().length - 1].Type === NotificationType.error) {
-    //     window.alert(`Efecto: ${this.vm.Listado()[this.vm.Listado().length - 1].Message}`);
-    //     this.vm.remove(this.vm.Listado().length - 1);
-    //   }
-    // })
-   }
+  // constructor(public vm: NotificationService) {
+  //   effect(() => {
+  //     if (this.vm.HayNotificaciones() && this.vm.Listado()[this.vm.Listado().length - 1].Type === NotificationType.error) {
+  //       window.alert(`Efecto: ${this.vm.Listado()[this.vm.Listado().length - 1].Message}`);
+  //       this.vm.remove(this.vm.Listado().length - 1);
+  //     }
+  //   })
+  //  }
 
   // private suscriptor: Unsubscribable | undefined;
   // ngOnInit(): void {
