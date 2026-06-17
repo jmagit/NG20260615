@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header, Footer, Notification, NotificationModal } from "./layout";
+import { RootViewContainerRefService } from './common-services';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +10,7 @@ import { Header, Footer, Notification, NotificationModal } from "./layout";
   styleUrl: './app.css'
 })
 export class App {
+  constructor(view: RootViewContainerRefService, rootViewContainerRef: ViewContainerRef) {
+    view.RootViewContainerRef = rootViewContainerRef;
+  }
 }

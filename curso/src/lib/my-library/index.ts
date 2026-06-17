@@ -1,4 +1,6 @@
 export * from './services/logger-service'
 export * from './pipes/cadenas'
 export * from './pipes/exec-pipe'
+export * from './pipes/numericos'
 export * from './components/sizer'
+export * from './directives/mis-validadores'

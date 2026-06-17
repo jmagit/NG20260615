@@ -2,19 +2,20 @@
 import { CommonModule, JsonPipe } from '@angular/common';
 import { Component, computed, effect, inject, resource, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CapitalizePipe, ElipsisPipe, LoggerService, Sizer, StripTagsPipe } from '@my-library';
+import { CapitalizePipe, ElipsisPipe, ExecPipe, LoggerService, Sizer, StripTagsPipe } from '@my-library';
 import { Unsubscribable } from 'rxjs';
 import { NotificationService, NotificationType } from 'src/app/common-services';
 import { Notification } from "src/app/layout";
 import GraficoSvg from '../grafico-svg/grafico-svg';
 import { Card, FormButtons } from 'src/app/common-component';
+import { SimboloDecimal, Calculadora } from '../calculadora/calculadora';
 
 @Component({
   selector: 'app-demos',
   imports: [JsonPipe, Notification, CommonModule, FormsModule,
     StripTagsPipe, ElipsisPipe, CapitalizePipe, Sizer, GraficoSvg,
-    FormButtons, Card,
-   ],
+    FormButtons, Card, Calculadora, ExecPipe,
+  ],
   templateUrl: './demos.html',
   styleUrl: './demos.css',
   // providers: [NotificationService]
@@ -66,7 +67,14 @@ export class Demos {
     this.estetica.update(value => ({ ...value, importante: !value.importante, error: !value.error }))
   }
 
-  calculo(a: number, b: number) { return a + b }
+  constructor() {
+    this.calculo = this.calculo.bind(this)
+  }
+  cont = 0
+  calculo(a: number, b: number) {
+    this.logger.log(`Calculo: ${++this.cont}`)
+    return a + b
+  }
 
   add(provincia: string) {
     const id = this.listado()[this.listado().length - 1].id + 1
@@ -140,4 +148,28 @@ export class Demos {
   //   })
   // })
 
+  // Ejemplo de Calculadora
+
+  idiomas = signal([
+    { codigo: 'en-US', region: 'USA' },
+    { codigo: 'es', region: 'España' },
+    { codigo: 'pt', region: 'Portugal' },
+  ]).asReadonly();
+  idioma = signal(this.idiomas()[0].codigo);
+  calculos = signal<Calculo[]>([]);
+  valCalculadora = signal(666);
+  simbolo: SimboloDecimal = ','
+
+  ponResultado(origen: string, valor: number) {
+    this.calculos.update(value => [ ...value, {
+      pos: this.calculos.length + 1,
+      origen,
+      valor: +valor
+    }]);
+  }
+}
+interface Calculo {
+  pos: number
+  origen: string
+  valor: number
 }
