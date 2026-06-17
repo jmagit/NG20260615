@@ -1,0 +1,9 @@
+.importante {
+  font-size: 1.2em;
+}
+.urgente {
+  font-style: italic;
+}
+.semi-invisible {
+  opacity: 0.2;
+}

@@ -2,17 +2,22 @@
 import { CommonModule, JsonPipe } from '@angular/common';
 import { Component, computed, effect, inject, resource, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LoggerService } from '@my-library';
+import { CapitalizePipe, ElipsisPipe, LoggerService, Sizer, StripTagsPipe } from '@my-library';
 import { Unsubscribable } from 'rxjs';
 import { NotificationService, NotificationType } from 'src/app/common-services';
 import { Notification } from "src/app/layout";
+import GraficoSvg from '../grafico-svg/grafico-svg';
+import { Card, FormButtons } from 'src/app/common-component';
 
 @Component({
   selector: 'app-demos',
-  imports: [JsonPipe, Notification, CommonModule, FormsModule, ],
+  imports: [JsonPipe, Notification, CommonModule, FormsModule,
+    StripTagsPipe, ElipsisPipe, CapitalizePipe, Sizer, GraficoSvg,
+    FormButtons, Card,
+   ],
   templateUrl: './demos.html',
   styleUrl: './demos.css',
-  providers: [NotificationService]
+  // providers: [NotificationService]
 })
 export class Demos {
   private readonly logger = inject(LoggerService)
@@ -67,6 +72,7 @@ export class Demos {
     const id = this.listado()[this.listado().length - 1].id + 1
     this.listado.update(value => [...value, { id, nombre: provincia }])
     this.idProvincia.set(id)
+    // this.listado.set([])
   }
 
   // Ejemplo de servicios
