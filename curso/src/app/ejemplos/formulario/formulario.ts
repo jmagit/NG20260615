@@ -1,4 +1,7 @@
 import { Component, inject, Service, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ErrorMessagePipe, NIFNIEValidator, NotblankValidator, TypeValidator, UppercaseValidator } from '@my-library';
+import { FormButtons } from 'src/app/common-component';
 import { NotificationService, NotificationType } from 'src/app/common-services';
 
 type Mode = 'add' | 'edit'
@@ -49,7 +52,8 @@ export class PersonasViewModelService {
 
 @Component({
   selector: 'app-formulario',
-  imports: [],
+  imports: [ FormsModule, ErrorMessagePipe, NIFNIEValidator, TypeValidator, UppercaseValidator,
+    NotblankValidator, FormButtons, ],
   templateUrl: './formulario.html',
   styleUrl: './formulario.css',
 })

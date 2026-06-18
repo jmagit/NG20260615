@@ -1,1 +1,57 @@
-<p>formulario works!</p>
+<p>
+  <input type="button" value="add" (click)="VM.add()">
+  <input type="number" value="0" #txtId>
+  <input type="button" value="edit" (click)="VM.edit(+txtId.value)">
+</p>
+
+<form name="miForm" #miForm="ngForm">
+  <div>
+    <label for="id">Código:</label>
+    @if (VM.Modo() === 'add') {
+      <input type="number" name="id" id="id" [(ngModel)]="VM.Elemento().id" #id="ngModel"
+        required min="0">
+      <output class="error" [hidden]="!id.hasError('required')">Es obligatorio</output>
+      <output class="error" [hidden]="!id.hasError('min')">Como mínimo debe ser 0</output>
+    } @else {
+      <output [textContent]="VM.Elemento().id"></output>
+    }
+  </div>
+  <div>
+    <label for="nombre">nombre:</label>
+    <input type="text" name="nombre" id="nombre" [(ngModel)]="VM.Elemento().nombre" #nombre="ngModel"
+      notblank maxlength="10" minlength="2">
+    <output class="error" [hidden]="nombre.valid">{{ nombre.errors | errormsg }}</output>
+  </div>
+  <div>
+    <label for="apellidos">apellidos:</label>
+    <input type="text" name="apellidos" id="apellidos" [(ngModel)]="VM.Elemento().apellidos" #apellidos="ngModel"
+      maxlength="10" minlength="2"
+      // pattern="^[A-Z]+$"
+      uppercase
+      >
+    <output class="error" [hidden]="apellidos.valid || miForm.pristine">{{ apellidos.errors | errormsg:'Debe estar en mayúsculas' }}</output>
+  </div>
+  <div>
+    <label for="edad">edad:</label>
+    <input type="number" name="edad" id="edad" [(ngModel)]="VM.Elemento().edad" #edad="ngModel"
+      min="16" max="67">
+    <output class="error" [hidden]="edad.valid || miForm.pristine">{{ edad.errors | errormsg }}</output>
+  </div>
+  <div>
+    <label for="correo">correo:</label>
+    <input type="url" name="correo" id="correo" [(ngModel)]="VM.Elemento().correo" #correo="ngModel"
+      /* email */ maxlength="100">
+    <output class="error" [hidden]="correo.valid || miForm.pristine">{{ correo.errors | errormsg }}</output>
+  </div>
+  <div>
+    <label for="nif">nif:</label>
+    <input type="text" name="nif" id="nif" [(ngModel)]="VM.Elemento().nif" #nif="ngModel"
+      nifnie /*pattern="^\d{1,8}[A-Z]$"*/ uppercase>
+    <output class="error" [hidden]="nif.valid || miForm.pristine">{{ nif.errors | errormsg }}</output>
+  </div>
+  <!-- <div>
+    <input type="button" value="Enviar" (click)="VM.send()" [disabled]="miForm.invalid">
+    <input type="button" value="Volver" (click)="VM.cancel()" >
+  </div> -->
+  <app-form-buttons (send)="VM.send()" [send-disabled]="miForm.invalid" (cancel)="VM.cancel()" />
+</form>

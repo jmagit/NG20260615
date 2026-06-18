@@ -72,6 +72,7 @@ export function uppercaseValidator(): ValidatorFn {
       : { uppercase: 'Tiene que estar en mayúsculas' };
   };
 }
+
 @Directive({
   selector: '[uppercase][formControlName],[uppercase][formControl],[uppercase][ngModel]',
   providers: [{ provide: NG_VALIDATORS, useExisting: UppercaseValidator, multi: true }],
@@ -92,6 +93,7 @@ export function lowercaseValidator(): ValidatorFn {
       : { lowercase: 'Tiene que estar en minúsculas' };
   };
 }
+
 @Directive({
   selector: '[lowercase][formControlName],[lowercase][formControl],[lowercase][ngModel]',
   providers: [{ provide: NG_VALIDATORS, useExisting: LowercaseValidator, multi: true }],
