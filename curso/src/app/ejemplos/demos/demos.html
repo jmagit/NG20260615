@@ -68,8 +68,8 @@
 
 <p><b>Fecha:</b> {{fecha | date:'dd/MMMM/yy'}} <input type="date" [(ngModel)]="Fecha" ></p>
 
-<p><b>Calcula:</b> 2 + 2 = {{ 2 + 2 }} = {{ calculo(2, 2) | currency:'EUR':'symbol':'1.2-2'}}</p>
-<!-- <p><b>Calcula:</b> 2 + {{fontSize()}} = {{ 2 + fontSize() }} = {{ calculo | exec:2:fontSize() | currency:'EUR':'symbol':'1.2-2'}}</p> -->
+<!-- <p><b>Calcula:</b> 2 + 2 = {{ 2 + 2 }} = {{ calculo(2, 2) | currency:'EUR':'symbol':'1.2-2'}}</p> -->
+<p><b>Calcula:</b> 2 + {{fontSize()}} = {{ 2 + fontSize() }} = {{ calculo | exec:2:fontSize() | currency:'EUR':'symbol':'1.2-2'}}</p>
 
 <ul>
   @for(item of listado() | slice:-5; track item.id) {

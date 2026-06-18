@@ -2,6 +2,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, HostListener, Inject, signal, input, effect, output } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { SlicePipe } from '@angular/common';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NotificationService, NotificationType } from '../../common-services';
 import { ToComaDecimalPipe, LoggerService } from '@my-library';
 
@@ -27,7 +28,7 @@ export class Calculadora implements OnInit, OnChanges {
   public readonly init = input<number>(0)
   public readonly updated = output<number>();
 
-  constructor(private log: LoggerService, private notify: NotificationService) {
+  constructor(private logger: LoggerService, private notify: NotificationService) {
     this.inicia();
     effect(() => {
       this.ponOperando((this.init() ?? 0).toString());
@@ -40,7 +41,7 @@ export class Calculadora implements OnInit, OnChanges {
     if (value !== this.separadorDecimal && (value === '.' || value === ',')) {
       this.separadorDecimal = value;
     } else if (value) {
-      this.log.error('Separador decimal no reconocido.');
+      this.logger.error('Separador decimal no reconocido.');
     }
   }
 
@@ -56,7 +57,7 @@ export class Calculadora implements OnInit, OnChanges {
     if (typeof (value) !== 'string')
       value = value.toString();
     if (value.length != 1 || value < '0' || value > '9') {
-      this.log.error('No es un valor numérico.');
+      this.logger.error('No es un valor numérico.');
       return;
     }
     if (this.limpiar || this.Pantalla() == '0') {
@@ -71,7 +72,7 @@ export class Calculadora implements OnInit, OnChanges {
       this.Pantalla.set(value.toString());
       this.limpiar = false;
     } else {
-      this.log.error('No es un valor numérico.');
+      this.logger.error('No es un valor numérico.');
     }
   }
 
@@ -82,8 +83,8 @@ export class Calculadora implements OnInit, OnChanges {
     } else if (this.Pantalla().indexOf('.') === -1) {
       this.Pantalla.update(old => old + '.');
     } else {
-      this.notify.add('Ya está la coma', NotificationType.warn)
-      //this.log.warn('Ya está la coma');
+      // this.notify.add('Ya está la coma', NotificationType.warn)
+      this.logger.warn('Ya está la coma');
     }
   }
 
@@ -104,7 +105,7 @@ export class Calculadora implements OnInit, OnChanges {
 
   calcula(value: string): void {
     if ('+-*/='.indexOf(value) == -1) {
-      this.log.error(`Operación no soportada: ${value}`);
+      this.logger.error(`Operación no soportada: ${value}`);
       return;
     }
 
@@ -150,12 +151,6 @@ export class Calculadora implements OnInit, OnChanges {
     // }
   }
 
-  // import { fromEvent } from 'rxjs';
-  // teclado = fromEvent(document, 'keydown').subscribe({next: ev => this.handleKeyDown(ev as KeyboardEvent)})
-  // ngOnDestroy() {
-  //   this.teclado.unsubscribe()
-  // }
-
   @HostListener('keydown', ['$event'])
   handleKeyDown(ev: KeyboardEvent) {
     if ('0' <= ev.key && ev.key <= '9')
@@ -171,5 +166,11 @@ export class Calculadora implements OnInit, OnChanges {
       }
     if (!environment.production) console.log(`Tecla: ${ev.key}`)
   }
+
+  // import { fromEvent } from 'rxjs';
+  // teclado = fromEvent(document, 'keydown').subscribe({next: ev => this.handleKeyDown(ev as KeyboardEvent)})
+  // ngOnDestroy() {
+  //   this.teclado.unsubscribe()
+  // }
 }
 
