@@ -6,14 +6,13 @@ import { CapitalizePipe, ElipsisPipe, ExecPipe, LoggerService, Sizer, StripTagsP
 import { Unsubscribable } from 'rxjs';
 import { NotificationService, NotificationType } from 'src/app/common-services';
 import { Notification } from "src/app/layout";
-import GraficoSvg from '../grafico-svg/grafico-svg';
 import { Card, FormButtons } from 'src/app/common-component';
 import { SimboloDecimal, Calculadora } from '../calculadora/calculadora';
 
 @Component({
   selector: 'app-demos',
-  imports: [JsonPipe, Notification, CommonModule, FormsModule,
-    StripTagsPipe, ElipsisPipe, CapitalizePipe, Sizer, GraficoSvg,
+  imports: [JsonPipe, /* Notification,*/ CommonModule, FormsModule,
+    StripTagsPipe, ElipsisPipe, CapitalizePipe, Sizer,
     FormButtons, Card, Calculadora, ExecPipe,
   ],
   templateUrl: './demos.html',
