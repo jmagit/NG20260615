@@ -12,6 +12,9 @@ import { routes } from './app.routes';
 import { ERROR_LEVEL, LoggerService } from 'src/lib/my-library/services/logger-service';
 import { environment } from 'src/environments/environment';
 import { NavigationService } from './common-services';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { ajaxWaitInterceptor } from './layout';
+import { AuthInterceptor } from './security';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,6 +24,8 @@ export const appConfig: ApplicationConfig = {
     // LoggerService,
     { provide: ERROR_LEVEL, useValue: environment.ERROR_LEVEL },
     { provide: LOCALE_ID, useValue: 'es-ES' },
-    { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: 'dd/MM/yyyy' }
+    { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: 'dd/MM/yyyy' },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
+    provideHttpClient(withInterceptorsFromDi(), withInterceptors([ ajaxWaitInterceptor ]))
   ]
 };

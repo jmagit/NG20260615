@@ -55,3 +55,8 @@
   </div> -->
   <app-form-buttons (send)="VM.send()" [send-disabled]="miForm.invalid" (cancel)="VM.cancel()" />
 </form>
+
+<p>
+  <input type="button" value="list" (click)="lista()">
+</p>
+{{ listado | json }}
