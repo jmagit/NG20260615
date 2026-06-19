@@ -1,4 +1,4 @@
-@if (visible) {
+@if (visible()) {
   @if (loginSrv.isAuthenticated()) {
     <div class="d-flex">
       <span class="navbar-text me-1" id="userData">Hola {{loginSrv.Name}} </span>

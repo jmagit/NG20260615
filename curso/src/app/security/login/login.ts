@@ -61,14 +61,14 @@ abstract class BaseComponent {
 export class Login extends BaseComponent implements OnDestroy {
   private login$: Subscription;
   private logout$: Subscription;
-  visible = true
+  visible = signal(true)
   constructor() {
     super()
     this.login$ = this.eventBus.on(LOGIN_FORM_OPEN_EVENT, () => {
-      this.visible = false
+      this.visible.set(false)
     })
     this.logout$ = this.eventBus.on(LOGIN_FORM_CLOSE_EVENT, () => {
-      this.visible = true
+      this.visible.set(true)
     })
   }
   ngOnDestroy(): void {
