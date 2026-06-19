@@ -4,8 +4,7 @@ import { ERROR_LEVEL, LoggerService } from '@my-library';
 import { NavigationService } from './navigation';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { Location } from '@angular/common';
-import { Component, inject, OnDestroy, signal } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'app-fake1',

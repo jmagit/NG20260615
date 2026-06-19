@@ -4,6 +4,8 @@ import { Injectable, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from '@my-library';
 
+// en src/app/app.config.ts
+// provideEnvironmentInitializer(() => inject(NavigationService)),
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
   private readonly router = inject(Router);

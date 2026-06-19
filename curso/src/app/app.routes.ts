@@ -22,6 +22,9 @@ export const routes: Routes = [
   { matcher: graficoFiles, loadComponent: () => import('./ejemplos/grafico-svg/grafico-svg'), canActivate: [ AuthWithRedirectCanActivate('/login')] },
   { path: 'config', loadChildren: () => import('./config/config-module').then(mod => mod.routes ), canActivate: [ AuthCanActivate]},
 
+  { path: 'contactos', loadChildren: () => import('./contactos/contactos-module').then(mod => mod.routes) },
+  { path: 'alysia/baxendale', redirectTo: '/contactos/43' },
+
   { path: 'login', component: LoginForm },
   { path: 'registro', component: RegisterUser },
 
@@ -35,6 +38,8 @@ export function generaMenu(auth: AuthService): Option[] {
     { texto: 'Demos', icono: 'fa-solid fa-person-chalkboard', path: '/demos', visible: true },
     { texto: 'Calculadora', icono: 'fa-solid fa-calculator', path: '/chisme/de/hacer/numeros', visible: true },
     { texto: 'Formulario', icono: 'fa-solid fa-chalkboard-user', path: '/formulario', visible: true },
+    { texto: 'Contactos', icono: 'fa-solid fa-address-book', path: '/contactos', visible: true },
+    { texto: 'Alysia', icono: 'fa-solid fa-address-book', path: '/alysia/baxendale', visible: true },
     { texto: 'SVG', icono: 'fa-solid fa-image', path: 'falso.svg', visible: true, },
     { texto: 'Dashboard', icono: 'fa-solid fa-table-columns', path: 'dashboard', visible: true, },
     {

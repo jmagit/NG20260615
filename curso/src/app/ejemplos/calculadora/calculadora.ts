@@ -2,7 +2,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, HostListener, Inject, signal, input, effect, output } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { SlicePipe } from '@angular/common';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NotificationService, NotificationType } from '../../common-services';
 import { ToComaDecimalPipe, LoggerService } from '@my-library';
 
@@ -83,8 +82,8 @@ export class Calculadora implements OnInit, OnChanges {
     } else if (this.Pantalla().indexOf('.') === -1) {
       this.Pantalla.update(old => old + '.');
     } else {
-      // this.notify.add('Ya está la coma', NotificationType.warn)
-      this.logger.warn('Ya está la coma');
+      this.notify.add('Ya está la coma', NotificationType.warn)
+      // this.logger.warn('Ya está la coma');
     }
   }
 
