@@ -6,7 +6,7 @@ import { RootViewContainerRefService } from './common-services';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, Notification, NotificationModal, AjaxWait],
+  imports: [RouterOutlet, Header, Footer, /*Notification,*/ NotificationModal, AjaxWait],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

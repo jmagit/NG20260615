@@ -83,7 +83,7 @@ export class Demos {
     // this.listado.set([])
   }
 
-  vm = inject(NotificationService)
+  // vm = inject(NotificationService)
 
   // Ejemplo de servicios
   // constructor(public vm: NotificationService) {

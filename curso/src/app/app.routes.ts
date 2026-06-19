@@ -1,6 +1,6 @@
 import { Routes, UrlSegment } from '@angular/router';
 import { Home, PageNotFound } from './layout';
-import { Calculadora, Demos, Formulario } from './ejemplos';
+import { Calculadora, Dashboard, Demos, Formulario } from './ejemplos';
 import { AuthCanActivate, AuthService, AuthWithRedirectCanActivate, LoginForm, RegisterUser } from './security';
 
 export function graficoFiles(url: UrlSegment[]) {
@@ -13,6 +13,7 @@ export const routes: Routes = [
   { path: 'demos', component: Demos },
   { path: 'chisme/de/hacer/numeros', component: Calculadora, title: 'Calculadora' },
   { path: 'formulario', component: Formulario, title: 'Ejemplo formularios' },
+  { path: 'dashboard', component: Dashboard },
   // { path: 'formulario/add', component: Formulario, title: 'Ejemplo formularios' },
   // { path: 'formulario/:id/edit', component: Formulario, title: 'Ejemplo formularios' },
   // { path: 'formulario/:id', component: Formulario, title: 'Ejemplo formularios' },
@@ -35,6 +36,7 @@ export function generaMenu(auth: AuthService): Option[] {
     { texto: 'Calculadora', icono: 'fa-solid fa-calculator', path: '/chisme/de/hacer/numeros', visible: true },
     { texto: 'Formulario', icono: 'fa-solid fa-chalkboard-user', path: '/formulario', visible: true },
     { texto: 'SVG', icono: 'fa-solid fa-image', path: 'falso.svg', visible: true, },
+    { texto: 'Dashboard', icono: 'fa-solid fa-table-columns', path: 'dashboard', visible: true, },
     {
       texto: 'config', icono: 'fa-solid fa-gears', visible: auth.isAuthenticated(), children: [
         { texto: 'config', icono: 'fa-solid fa-gears', path: '/config', visible: true },
