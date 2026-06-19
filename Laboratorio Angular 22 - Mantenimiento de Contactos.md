@@ -189,11 +189,13 @@ La clase necesita los siguientes atributos:
 Añadir los atributos de la clase ContactosViewModelService:
 
 ```ts
-public readonly Modo: WritableSignal<ModoCRUD> = signal('list');
-public readonly Listado: WritableSignal<ContactoModel[]> = signal([]);
-public readonly Elemento: WritableSignal<ContactoModel> = signal({...init_value});
-protected idOriginal?: number;
-protected listURL = '/contactos';
+  //#region Estado
+  public readonly Modo: WritableSignal<ModoCRUD> = signal('list');
+  public readonly Listado: WritableSignal<ContactoModel[]> = signal([]);
+  public readonly Elemento: WritableSignal<ContactoModel> = signal({ ...init_value });
+  protected idOriginal?: number;
+  protected listURL = '/contactos';
+  //#endregion
 ```
 
 Añadir el constructor e inyectar dependencias:
@@ -212,108 +214,118 @@ Añadir el constructor e inyectar dependencias:
 Para evitar un constructor con demasiados parámetros se puede sustituir por inyecciones funcionales:
 
 ```ts
+  //#region Inyección de dependencias
   protected readonly notify = inject(NotificationService);
   protected readonly logger = inject(LoggerService);
   protected readonly dao = inject(ContactosDAOService);
   protected readonly navigation = inject(NavigationService);
   protected readonly router = inject(Router);
   readonly auth = inject(AuthService);
+  //#endregion
 ```
 
 Añadir el comando para obtener el listado a mostrar:
 
 ```ts
-public list(): void {
-  this.dao.query().subscribe({
-    next: data => {
-      this.Listado.set(data);
-      this.Modo.set('list');
-    },
-    error: err => this.handleError(err)
-  });
-}
+  //#region Recuperar lista de elementos
+  public list(): void {
+    this.dao.query().subscribe({
+      next: data => {
+        this.Listado.set(data);
+        this.Modo.set('list');
+      },
+      error: err => this.handleError(err)
+    });
+  }
+  //#endregion
 ```
 
 Añadir los comandos para preparar las operaciones con la entidad:
 
 ```ts
-public add(): void {
-  this.Elemento.set({...init_value});
-  this.Modo.set('add');
-}
-public edit(key: any): void {
-  this.dao.get(key).subscribe({
-    next: data => {
-      this.Elemento.set(data);
-      this.idOriginal = key;
-      this.Modo.set('edit');
-    },
-    error: err => this.handleError(err)
-  });
-}
-public view(key: any): void {
-  this.dao.get(key).subscribe({
-    next: data => {
-      this.Elemento.set(data);
-      this.Modo.set('view');
-    },
-    error: err => this.handleError(err)
-  });
-}
-public delete(key: any): void {
-  if (!window.confirm('¿Seguro?')) { return; }
+  //#region Comandos con la entidad
+  public add(): void {
+    this.Elemento.set({ ...init_value });
+    this.Modo.set('add');
+  }
+  public edit(key: any): void {
+    this.dao.get(key).subscribe({
+      next: data => {
+        this.Elemento.set(data);
+        this.idOriginal = key;
+        this.Modo.set('edit');
+      },
+      error: err => this.handleError(err)
+    });
+  }
+  public view(key: any): void {
+    this.dao.get(key).subscribe({
+      next: data => {
+        this.Elemento.set(data);
+        this.Modo.set('view');
+      },
+      error: err => this.handleError(err)
+    });
+  }
+  public delete(key: any): void {
+    if (!window.confirm('¿Seguro?')) { return; }
 
-  this.dao.remove(key).subscribe({
-    next: () => {
-      // this.list()
-      this.load()
-    },
-    error: err => this.handleError(err)
-  });
-}
+    this.dao.remove(key).subscribe({
+      next: () => {
+        this.list()
+        // this.load()
+      },
+      error: err => this.handleError(err)
+    });
+  }
+  //#endregion
 ```
 
 Añadir el comando para liberar la memoria cuando ya no sea necesaria:
 
 ```ts
-clear() {
-  this.Elemento.set({...init_value})
-  this.idOriginal = undefined;
-  this.Listado.set([]);
-}
+  //#region Limpieza
+  clear() {
+    this.Elemento.set({ ...init_value })
+    this.idOriginal = undefined;
+    this.Listado.set([]);
+  }
+  //#endregion
 ```
 
 Añadir los comandos para cerrar la vista de detalle o el formulario:
 
 ```ts
-public cancel(): void {
-  this.clear()
-  this.router.navigateByUrl(this.listURL)
-  // this.navigation.back()
-}
-public send(): void {
-  switch (this.Modo()) {
-    case 'add':
-      this.dao.add(this.Elemento()).subscribe({
-        next: () => this.cancel(),
-        error: err => this.handleError(err)
-      });
-      break;
-    case 'edit':
-      if (!this.idOriginal) {
-        this.logger.error('Falta el identificador')
-        return
-      }
-      this.dao.change(this.idOriginal, this.Elemento()).subscribe({
-        next: () => this.cancel(),
-        error: err => this.handleError(err)
-      });
-      break;
-    case 'view':
-      this.cancel();
-      break;
+  //#region Comandos para las vistas de detalle y formularios
+  public cancel(): void {
+    this.clear()
+    this.router.navigateByUrl(this.listURL)
+    // this.navigation.back()
   }
-}
+  public send(): void {
+    switch (this.Modo()) {
+      case 'add':
+        this.dao.add(this.Elemento()).subscribe({
+          next: () => this.cancel(),
+          error: err => this.handleError(err)
+        });
+        break;
+      case 'edit':
+        if (!this.idOriginal) {
+          this.logger.error('Falta el identificador')
+          return
+        }
+        this.dao.change(this.idOriginal, this.Elemento()).subscribe({
+          next: () => this.cancel(),
+          error: err => this.handleError(err)
+        });
+        break;
+      case 'view':
+        this.cancel();
+        break;
+    }
+  }
+  //#endregion
 ```
 
 Añadir los manipuladores de errores para su notificación:
@@ -391,7 +403,8 @@ export class ContactosList implements OnChanges, OnDestroy {
   readonly page = input(0);
 
   ngOnChanges(_changes: SimpleChanges): void {
-    this.VM.load(this.page())
+    this.VM.list()
+    // this.VM.load(this.page())
   }
 
   ngOnDestroy(): void { this.VM.clear(); }
@@ -495,9 +508,7 @@ Editar el fichero `src/app/contactos/tmpl-list.html` y sustituir el código por 
     <tr class="table-info">
       <th class="display-4">Lista de contactos</th>
       <th class="text-end">
-        @if (VM.auth.isAuthenticated) {
         <button class="btn btn-success" routerLink="add"><i class="fas fa-plus"></i> Añadir</button>
-        }
       </th>
     </tr>
   </thead>
@@ -521,12 +532,10 @@ Editar el fichero `src/app/contactos/tmpl-list.html` y sustituir el código por 
           </div>
         </td>
         <td class="align-middle text-end">
-          @if (VM.auth.isAuthenticated) {
           <div class="btn-group" role="group">
             <button class="btn btn-success" [routerLink]="[item.id, 'edit']"><i class="fas fa-pen"></i></button>
             <button class="btn btn-danger" (click)="VM.delete(item.id)"><i class="far fa-trash-alt"></i></button>
           </div>
-          }
       </td>
       </tr>
   }
