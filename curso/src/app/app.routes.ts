@@ -1,6 +1,6 @@
 import { Routes, UrlSegment } from '@angular/router';
 import { Home, PageNotFound } from './layout';
-import { Calculadora, Dashboard, Demos, Formulario } from './ejemplos';
+import { Calculadora, Demos, Formulario } from './ejemplos';
 import { AuthCanActivate, AuthService, AuthWithRedirectCanActivate, LoginForm, RegisterUser } from './security';
 
 export function graficoFiles(url: UrlSegment[]) {
@@ -13,7 +13,7 @@ export const routes: Routes = [
   { path: 'demos', component: Demos },
   { path: 'chisme/de/hacer/numeros', component: Calculadora, title: 'Calculadora' },
   { path: 'formulario', component: Formulario, title: 'Ejemplo formularios' },
-  { path: 'dashboard', component: Dashboard },
+  { path: 'dashboard', loadComponent: () => import('./ejemplos/dashboard/dashboard') },
   // { path: 'formulario/add', component: Formulario, title: 'Ejemplo formularios' },
   // { path: 'formulario/:id/edit', component: Formulario, title: 'Ejemplo formularios' },
   // { path: 'formulario/:id', component: Formulario, title: 'Ejemplo formularios' },
@@ -24,6 +24,8 @@ export const routes: Routes = [
 
   { path: 'contactos', loadChildren: () => import('./contactos/contactos-module').then(mod => mod.routes) },
   { path: 'alysia/baxendale', redirectTo: '/contactos/43' },
+
+  { path: 'libros', loadChildren: () => import('./libros/libros-module').then(mod => mod.routes) },
 
   { path: 'login', component: LoginForm },
   { path: 'registro', component: RegisterUser },
@@ -40,6 +42,7 @@ export function generaMenu(auth: AuthService): Option[] {
     { texto: 'Formulario', icono: 'fa-solid fa-chalkboard-user', path: '/formulario', visible: true },
     { texto: 'Contactos', icono: 'fa-solid fa-address-book', path: '/contactos', visible: true },
     { texto: 'Alysia', icono: 'fa-solid fa-address-book', path: '/alysia/baxendale', visible: true },
+    { texto: 'Libros', icono: 'fa-solid fa-book', path: '/libros', visible: auth.isAuthenticated() },
     { texto: 'SVG', icono: 'fa-solid fa-image', path: 'falso.svg', visible: true, },
     { texto: 'Dashboard', icono: 'fa-solid fa-table-columns', path: 'dashboard', visible: true, },
     {

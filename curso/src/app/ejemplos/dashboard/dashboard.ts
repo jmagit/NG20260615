@@ -12,7 +12,7 @@ import { NgComponentOutlet } from '@angular/common';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard {
+export default class Dashboard {
     menu = [
     { texto: 'inicio', icono: 'fa-solid fa-house', componente: Home },
     { texto: 'demos', icono: 'fa-solid fa-person-chalkboard', componente: Demos },
