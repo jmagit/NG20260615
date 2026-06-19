@@ -11,18 +11,18 @@ import { HttpContext, HttpErrorResponse } from '@angular/common/http';
 // Versión interface
 export interface LibroModel {
   [index: string]: any;
-  idLibro?: string
+  idLibro?: number
   titulo?: string
   autor?: string
   pais?: string
-  fecha?: string
-  paginas?: string
+  fecha?: number
+  paginas?: number
   wiki?: string
 }
 
 // Constante para la inicialización (Signal Forms)
 export const init_value: LibroModel = {
-  idLibro: "0",
+  idLibro: 0,
 }
 
 @Injectable({

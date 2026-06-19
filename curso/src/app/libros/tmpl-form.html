@@ -45,12 +45,6 @@
     <label for="wiki">wiki:</label>
     <output class="invalid-feedback" [hidden]="wiki.valid">{{wiki.errors | errormsg}}</output>
   </div>
-  <!-- <div class="form-floating col-md-4">
-    <input class="form-control" [class.is-invalid]="numPag.invalid" type="number" name="numPag" id="numPag"
-       [(ngModel)]="VM.Elemento().numPag" #numPag="ngModel" min="50" max="2000" placeholder=" ">
-    <label for="numPag">numPag:</label>
-    <output class="invalid-feedback" [hidden]="numPag.valid">{{numPag.errors | errormsg}}</output>
-  </div> -->
   <app-form-buttons (send)="VM.send()" [send-disabled]="miForm.invalid" (cancel)="VM.cancel()"
     (delete)="VM.delete(VM.Elemento().idLibro)" [delete-visible]="VM.Modo() === 'edit'" />
 </form>
