@@ -1,14 +1,25 @@
-import { Routes } from '@angular/router';
+import { Routes, UrlSegment } from '@angular/router';
 import { Home, PageNotFound } from './layout';
 import { Calculadora, Demos, Formulario } from './ejemplos';
-import { AuthService, LoginForm, RegisterUser } from './security';
+import { AuthCanActivate, AuthService, AuthWithRedirectCanActivate, LoginForm, RegisterUser } from './security';
+
+export function graficoFiles(url: UrlSegment[]) {
+  return url.length === 1 && url[0].path.endsWith('.svg') ? ({ consumed: url }) : null;
+}
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', component: Home },
+  { path: '', pathMatch: 'full', redirectTo: '/inicio' },
   { path: 'inicio', component: Home },
   { path: 'demos', component: Demos },
   { path: 'chisme/de/hacer/numeros', component: Calculadora, title: 'Calculadora' },
   { path: 'formulario', component: Formulario, title: 'Ejemplo formularios' },
+  // { path: 'formulario/add', component: Formulario, title: 'Ejemplo formularios' },
+  // { path: 'formulario/:id/edit', component: Formulario, title: 'Ejemplo formularios' },
+  // { path: 'formulario/:id', component: Formulario, title: 'Ejemplo formularios' },
+  // { path: 'formulario/:id/:kk', component: Formulario, title: 'Ejemplo formularios' },
+
+  { matcher: graficoFiles, loadComponent: () => import('./ejemplos/grafico-svg/grafico-svg'), canActivate: [ AuthWithRedirectCanActivate('/login')] },
+  { path: 'config', loadChildren: () => import('./config/config-module').then(mod => mod.routes ), canActivate: [ AuthCanActivate]},
 
   { path: 'login', component: LoginForm },
   { path: 'registro', component: RegisterUser },
@@ -21,8 +32,16 @@ export function generaMenu(auth: AuthService): Option[] {
   return [
     { texto: 'Inicio', icono: 'fa-solid fa-house', path: '/inicio', visible: true },
     { texto: 'Demos', icono: 'fa-solid fa-person-chalkboard', path: '/demos', visible: true },
-    { texto: 'Calculadora', icono: 'fa-solid fa-calculator', path: '/chisme/de/hacer/numeros', visible: auth.isAuthenticated() },
+    { texto: 'Calculadora', icono: 'fa-solid fa-calculator', path: '/chisme/de/hacer/numeros', visible: true },
     { texto: 'Formulario', icono: 'fa-solid fa-chalkboard-user', path: '/formulario', visible: true },
+    { texto: 'SVG', icono: 'fa-solid fa-image', path: 'falso.svg', visible: true, },
+    {
+      texto: 'config', icono: 'fa-solid fa-gears', visible: auth.isAuthenticated(), children: [
+        { texto: 'config', icono: 'fa-solid fa-gears', path: '/config', visible: true },
+        { texto: 'perfil', icono: 'fa-solid fa-user-pen', path: '/config/perfil', visible: true, separado: true },
+        { texto: 'Permisos', icono: 'fa-solid fa-screwdriver-wrench', path: '/config/permisos', visible: true },
+      ]
+    },
     { texto: 'Falla', icono: 'fa-solid fa-ban', path: '/desconocido', visible: true },
   ]
 }

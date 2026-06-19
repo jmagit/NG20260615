@@ -57,6 +57,20 @@
 </form>
 
 <p>
-  <input type="button" value="list" (click)="lista()">
+  <input type="button" value="trae libros" (click)="traeLibros()">
+  <input type="button" value="borra libros" (click)="clearLibros()">
 </p>
 {{ listado | json }}
+<p>
+  <input type="number" [(ngModel)]="id" >
+  status: <b [textContent]="recurso.status()"></b> ({{recurso.progress()?.loaded}})<br>
+  <output>
+    @if(recurso.isLoading()) {
+      Loading ...
+    } @else if(recurso.hasValue()) {
+      {{recurso.value() | json}}
+    } @else if(recurso.error()) {
+      {{recurso.error()?.message}}
+    }
+  </output>
+</p>

@@ -8,12 +8,13 @@ import { NotificationService, NotificationType } from 'src/app/common-services';
 import { Notification } from "src/app/layout";
 import { Card, FormButtons } from 'src/app/common-component';
 import { SimboloDecimal, Calculadora } from '../calculadora/calculadora';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-demos',
   imports: [JsonPipe, /* Notification,*/ CommonModule, FormsModule,
     StripTagsPipe, ElipsisPipe, CapitalizePipe, Sizer,
-    FormButtons, Card, Calculadora, ExecPipe,
+    FormButtons, Card, Calculadora, ExecPipe, RouterLink,
   ],
   templateUrl: './demos.html',
   styleUrl: './demos.css',
@@ -81,6 +82,8 @@ export class Demos {
     this.idProvincia.set(id)
     // this.listado.set([])
   }
+
+  vm = inject(NotificationService)
 
   // Ejemplo de servicios
   // constructor(public vm: NotificationService) {
