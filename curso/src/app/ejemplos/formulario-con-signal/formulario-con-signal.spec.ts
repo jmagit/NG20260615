@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RegisterUser } from './register-user';
+import { FormularioConSignal } from './formulario-con-signal';
 
-describe('RegisterUser', () => {
-  let component: RegisterUser;
-  let fixture: ComponentFixture<RegisterUser>;
+describe('FormularioConSignal', () => {
+  let component: FormularioConSignal;
+  let fixture: ComponentFixture<FormularioConSignal>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RegisterUser],
+      imports: [FormularioConSignal],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RegisterUser);
+    fixture = TestBed.createComponent(FormularioConSignal);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

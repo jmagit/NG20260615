@@ -1,0 +1,8 @@
+.invalid {
+  border-color: red !important;
+  box-shadow: 5px 5px 5px red !important;
+  margin-left: 10px !important;
+  margin-right: 15px;
+  transform: scale(1.02) !important;
+  transition: all linear 1s !important;
+}

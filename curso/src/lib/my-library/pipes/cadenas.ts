@@ -81,5 +81,33 @@ export class ErrorMessagePipe implements PipeTransform {
     return msg.trim();
   }
 }
+@Pipe({
+    name: 'error2text'
+})
+export class ErrorToTextPipe implements PipeTransform {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transform(value: any): string {
+    if (!value || (Array.isArray(value) && value.length === 0)) return ''
+    let msg = '';
+    for (const err of value) {
+      if(err.message) {
+        msg += err.message + (err.message.endsWith('.') ? ' ' : '. ')
+        continue
+      }
+      switch (err.kind) {
+        case 'required': msg += 'Es obligatorio. '; break;
+        case 'minLength': msg += `Como mínimo debe tener ${err.minLength} caracteres. `; break;
+        case 'maxLength': msg += `Como máximo debe tener ${err.maxLength} caracteres. `; break;
+        case 'pattern': msg += 'El formato no es correcto.'; break;
+        case 'email': msg += 'El formato del correo electrónico no es correcto. '; break;
+        case 'min': msg += `El valor debe ser mayor o igual a ${err.min}. `; break;
+        case 'max': msg += `El valor debe ser inferior o igual a ${err.max}. `; break;
+        default:
+          msg += `Error desconocido: ${err.kind}. `; break;
+      }
+    }
+    return msg.trim();
+  }
+}
 
 export const PIPES_CADENAS = [ElipsisPipe, CapitalizePipe, StripTagsPipe, NormalizePipe, ErrorMessagePipe,]

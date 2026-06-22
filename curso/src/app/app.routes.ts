@@ -1,6 +1,6 @@
 import { Routes, UrlSegment } from '@angular/router';
 import { Home, PageNotFound } from './layout';
-import { Calculadora, Demos, Formulario } from './ejemplos';
+import { Calculadora, Demos, Formulario, FormularioConSignal } from './ejemplos';
 import { AuthCanActivate, AuthService, AuthWithRedirectCanActivate, LoginForm, RegisterUser } from './security';
 
 export function graficoFiles(url: UrlSegment[]) {
@@ -13,6 +13,7 @@ export const routes: Routes = [
   { path: 'demos', component: Demos },
   { path: 'chisme/de/hacer/numeros', component: Calculadora, title: 'Calculadora' },
   { path: 'formulario', component: Formulario, title: 'Ejemplo formularios' },
+  { path: 'formulario/signal', component: FormularioConSignal, title: 'Ejemplo formularios con señales' },
   { path: 'dashboard', loadComponent: () => import('./ejemplos/dashboard/dashboard') },
   // { path: 'formulario/add', component: Formulario, title: 'Ejemplo formularios' },
   // { path: 'formulario/:id/edit', component: Formulario, title: 'Ejemplo formularios' },
@@ -37,9 +38,14 @@ export const routes: Routes = [
 export function generaMenu(auth: AuthService): Option[] {
   return [
     { texto: 'Inicio', icono: 'fa-solid fa-house', path: '/inicio', visible: true },
-    { texto: 'Demos', icono: 'fa-solid fa-person-chalkboard', path: '/demos', visible: true },
-    { texto: 'Calculadora', icono: 'fa-solid fa-calculator', path: '/chisme/de/hacer/numeros', visible: true },
-    { texto: 'Formulario', icono: 'fa-solid fa-chalkboard-user', path: '/formulario', visible: true },
+    {
+      texto: 'Ejemplos', icono: 'fa-solid fa-vial', visible: true, children: [
+        { texto: 'Demos', icono: 'fa-solid fa-person-chalkboard', path: '/demos', visible: true },
+        { texto: 'Calculadora', icono: 'fa-solid fa-calculator', path: '/chisme/de/hacer/numeros', visible: true },
+        { texto: 'Formulario', icono: 'fa-solid fa-chalkboard-user', path: '/formulario', visible: true },
+        { texto: 'Formulario2', icono: 'fa-solid fa-chalkboard-user', path: '/formulario/signal', visible: true },
+      ]
+    },
     { texto: 'Contactos', icono: 'fa-solid fa-address-book', path: '/contactos', visible: true },
     { texto: 'Alysia', icono: 'fa-solid fa-address-book', path: '/alysia/baxendale', visible: true },
     { texto: 'Libros', icono: 'fa-solid fa-book', path: '/libros', visible: auth.isAuthenticated() },

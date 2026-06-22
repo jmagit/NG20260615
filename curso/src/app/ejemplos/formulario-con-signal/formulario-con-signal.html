@@ -1,0 +1,45 @@
+<p>
+  <input type="button" value="add" (click)="vm.add()">
+  <input type="number" value="0" #txtId>
+  <input type="button" value="edit" (click)="vm.edit(+txtId.value)">
+</p>
+<form [formRoot]="fieldsTree">
+  <div>
+    <label for="id">código:</label>
+    <input type="number" id="id" [formField]="fieldsTree.id" [class.invalid]="fieldsTree.id().invalid()" >
+    <output class="error" [hidden]="fieldsTree.id().valid()">{{ fieldsTree.id().errors() | error2text }}</output>
+  </div>
+  <div>
+    <label for="nombre">nombre:</label>
+    <input type="text" id="nombre" [formField]="fieldsTree.nombre" [class.invalid]="fieldsTree.nombre().invalid()" >
+    <output class="error" [hidden]="fieldsTree.nombre().valid()">{{ fieldsTree.nombre().errors() | error2text }}</output>
+  </div>
+  <div>
+    <label for="apellidos">apellidos:</label>
+    <input type="text" id="apellidos" [formField]="fieldsTree.apellidos" [class.invalid]="fieldsTree.apellidos().invalid()" >
+    <output class="error" [hidden]="fieldsTree.apellidos().valid()">{{ fieldsTree.apellidos().errors() | error2text }}</output>
+  </div>
+  <div>
+    <label for="edad">edad:</label>
+    <input type="number" id="" [formField]="fieldsTree.edad" [class.invalid]="fieldsTree.edad().invalid()" >
+    <output class="error" [hidden]="fieldsTree.edad().valid()">{{ fieldsTree.edad().errors() | error2text }}</output>
+  </div>
+  <div>
+    <label for="correo">correo:</label>
+    <input type="email" id="correo" [formField]="fieldsTree.correo" [class.invalid]="fieldsTree.correo().invalid()" >
+    <output class="error" [hidden]="fieldsTree.correo().valid()">{{ fieldsTree.correo().errors() | error2text }}</output>
+  </div>
+  <div>
+    <label for="nif">nif:</label>
+    <input type="text" id="nif" [formField]="fieldsTree.nif" [class.invalid]="fieldsTree.nif().invalid()" >
+    <output class="error" [hidden]="fieldsTree.nif().valid()">{{ fieldsTree.nif().errors() | error2text }}</output>
+  </div>
+  <div>
+    <label for="fecha">fecha:</label>
+    <input type="date" id="fecha" [formField]="fieldsTree.fecha" [class.invalid]="fieldsTree.fecha().invalid()" >
+    <output class="error" [hidden]="fieldsTree.fecha().valid()">{{ fieldsTree.fecha().errors() | error2text }}</output>
+  </div>
+  <input type="submit" value="send" [disabled]="fieldsTree().invalid()" >
+  <app-form-buttons (send)="send()" [send-disabled]="fieldsTree().invalid()" (cancel)="vm.cancel()" />
+</form>
+{{ vm.Elemento() | json }}
