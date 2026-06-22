@@ -81,6 +81,7 @@ export class ErrorMessagePipe implements PipeTransform {
     return msg.trim();
   }
 }
+
 @Pipe({
     name: 'error2text'
 })
@@ -102,8 +103,9 @@ export class ErrorToTextPipe implements PipeTransform {
         case 'email': msg += 'El formato del correo electrónico no es correcto. '; break;
         case 'min': msg += `El valor debe ser mayor o igual a ${err.min}. `; break;
         case 'max': msg += `El valor debe ser inferior o igual a ${err.max}. `; break;
-        default:
-          msg += `Error desconocido: ${err.kind}. `; break;
+        case 'minDate': msg += `La fecha debe ser posterior al ${err.minDate}.`; break;
+        case 'maxDate': msg += `La fecha debe ser anterior al ${err.maxDate}.`; break;
+        default: msg += `Error desconocido: ${err.kind}. `; break;
       }
     }
     return msg.trim();
